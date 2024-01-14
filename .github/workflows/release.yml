@@ -13,12 +13,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
+      - name: Install Helm
+        uses: azure/setup-helm@v3
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
+      - name: Add bjw-s helm repo for common chart dependency
+        run: helm repo add bjw-s https://bjw-s.github.io/helm-charts
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         env:
