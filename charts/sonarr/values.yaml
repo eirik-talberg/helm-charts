@@ -1,0 +1,43 @@
+service:
+  main:
+    ports:
+      http:
+        # -- Sonarr listening port
+        port: 8989
+controllers:
+  main:
+    # -- Sonarr depends on a local SQLite database and thus needs to be configured as a StatefulSet
+    type: statefulset
+    containers:
+      main:
+        image:
+          # -- Image repository for Sonarr
+          repository: "ghcr.io/onedr0p/sonarr"
+          # -- Image version
+          tag: "3.0.10.1567"
+        # -- Custom security context for the container to access mounted pods (necessary for Longhorn)
+        securityContext: # TODO: Switch to initcontainer to set ownership for longhorn mount
+          runAsUser: 0 #https://github.com/onedr0p/containers/blob/main/apps/ubuntu/Dockerfile#L41C15-L41C18
+          runAsGroup: 0
+
+        # -- Custom liveness probe for Sonarr
+        probes:
+          liveness:
+            enabled: true
+            ## Set this to true if you wish to specify your own livenessProbe
+            custom: true
+            ## The spec field contains the values for the default livenessProbe.
+            ## If you selected custom: true, this field holds the definition of the livenessProbe.
+            spec:
+              exec:
+                command:
+                  - /usr/bin/env
+                  - bash
+                  - -c
+                  - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
+                    read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+              failureThreshold: 5
+              initialDelaySeconds: 60
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
