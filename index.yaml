@@ -1,5 +1,20 @@
 apiVersion: v1
 entries:
+  radarr:
+  - apiVersion: v2
+    appVersion: 5.2.6.8376
+    created: "2024-02-13T18:20:59.53541518Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 2.4.0
+    description: A Helm chart for Kubernetes
+    digest: 499e7d1401ee5c3eaba33d1de9fa88272132f7a50bea39ef1d608b0f46e8ad3a
+    name: radarr
+    type: application
+    urls:
+    - https://github.com/eirik-talberg/helm-charts/releases/download/radarr-0.1.0/radarr-0.1.0.tgz
+    version: 0.1.0
   sonarr:
   - apiVersion: v2
     appVersion: 3.0.10.1567
@@ -15,4 +30,4 @@ entries:
     urls:
     - https://github.com/eirik-talberg/helm-charts/releases/download/sonarr-0.1.0/sonarr-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-14T20:39:20.484195945Z"
+generated: "2024-02-13T18:20:59.535422423Z"
