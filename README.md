@@ -21,6 +21,7 @@ Again, wherever possible, I try to use their well-structured and up-to-date cont
 | Chart name              | Current version | Application version |
 |-------------------------|-----------------|---------------------|
 | [sonarr](charts/sonarr) | 0.1.0           | 3.0.10.1567         |
+| [radarr](charts/radarr) | 0.1.0           | 5.2.6.8376          |
 
 
 ## Usage
